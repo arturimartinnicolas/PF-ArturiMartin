@@ -1,0 +1,15 @@
+.listaInscripciones {
+    width: 100%;
+}
+.mat-column-nombreCurso {
+    text-align: left;
+}
+.mat-column-nombreAlumno {
+    text-align: left;
+}
+.mat-column-acciones {
+    width: 64px;
+}
+.cursor-pointer{
+    cursor: pointer;
+}

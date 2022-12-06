@@ -1,0 +1,36 @@
+<div *ngIf="sesion$ | async as sesion" style="width: 100%; height: 100%">
+  <div
+    *ngIf="sesion.sesionActiva"
+    class="flex-column navbar-expand-md p-2 text-bg-primary mt-2"
+    style="width: 100%; height: 100%"
+  >
+    <nav>
+      <nav class="nav nav-pills flex-column">
+        <a routerLink="home" class="nav-link text-white"> Inicio </a>
+        <hr />
+        <a routerLink="alumnos" class="nav-link text-white"> Alumnos </a>
+        <a routerLink="cursos" class="nav-link text-white"> Cursos </a>
+        <a routerLink="inscripciones" class="nav-link text-white">
+          Inscripciones
+        </a>
+        <div *ngIf="sesion$ | async as sesion">
+          <a
+            *ngIf="sesion.usuarioActivo?.esAdmin"
+            routerLink="usuarios"
+            class="nav-link text-white"
+          >
+            Usuarios
+          </a>
+        </div>
+        <hr />
+        <a
+          (click)="logout()"
+          class="nav-link text-white"
+          style="cursor: pointer"
+        >
+          Salir
+        </a>
+      </nav>
+    </nav>
+  </div>
+</div>

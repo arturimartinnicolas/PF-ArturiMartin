@@ -1,0 +1,53 @@
+<h1
+  mat-dialog-title
+  class="navbar text-bg-dark text-white mt-2 justify-content-center"
+>
+  <div *ngIf="data" class="abm-header" appHeader20>Modificación de Usuario</div>
+  <div *ngIf="!data" class="abm-header" appHeader20>Alta de Usuario</div>
+</h1>
+<div mat-dialog-content>
+  <form [formGroup]="formulario">
+    <div class="row">
+      <mat-form-field appearance="fill">
+        <mat-label>Usuario</mat-label>
+        <input
+          matInput
+          formControlName="usuario"
+          placeholder="Ingrese un usuario"
+        />
+        <mat-error *ngIf="formulario.get('usuario')?.invalid"
+          >El campo es requerido</mat-error
+        >
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="fill">
+        <mat-label>Clave</mat-label>
+        <input
+          matInput
+          formControlName="clave"
+          placeholder="Ingrese una clave"
+        />
+        <mat-error *ngIf="formulario.get('clave')?.invalid"
+          >El campo es requerido</mat-error
+        >
+      </mat-form-field>
+    </div>
+    <div class="row mt-3">
+      <mat-slide-toggle formControlName="esAdmin">Es admin</mat-slide-toggle>
+    </div>
+  </form>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-raised-button mat-dialog-close color="primary">Cancelar</button>
+  <button
+    id="btnGuardar"
+    mat-raised-button
+    color="primary"
+    (click)="guardar()"
+    [disabled]="formulario.invalid"
+  >
+    Guardar
+  </button>
+</div>

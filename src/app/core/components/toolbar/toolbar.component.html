@@ -1,0 +1,37 @@
+<p>
+  <mat-toolbar color="accent">
+    <div class="col-md-3">
+      <span
+        routerLink="home"
+        appHeader20
+        class="nav-link text-white"
+        style="cursor: pointer"
+        >Plataforma educativa</span
+      >
+    </div>
+    <div class="col-md-3">
+      <span class="example-spacer"></span>
+    </div>
+
+    <div *ngIf="sesion" class="col-md-3">
+      <span
+        style="text-align: left; height: 10px"
+        *ngIf="sesion.menuActivo"
+        class="nav-link text-white"
+        ><p style="font-size: small">
+          {{ sesion.menuActivo | titlecase }}
+        </p></span
+      >
+    </div>
+    <div *ngIf="sesion" class="col-md-3">
+      <span
+        style="text-align: right; height: 10px"
+        *ngIf="sesion.usuarioActivo"
+        class="nav-link text-white"
+        ><p style="font-size: small">
+          Usuario {{ sesion.usuarioActivo.usuario | titlecase }}
+        </p></span
+      >
+    </div>
+  </mat-toolbar>
+</p>

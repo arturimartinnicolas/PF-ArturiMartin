@@ -1,0 +1,98 @@
+<h1
+  mat-dialog-title
+  class="navbar text-bg-dark text-white mt-2 justify-content-center"
+>
+  <div *ngIf="data" class="abm-header" appHeader20>Modificación de Curso</div>
+  <div *ngIf="!data" class="abm-header" appHeader20>Nuevo Curso</div>
+</h1>
+<div mat-dialog-content>
+  <form [formGroup]="formulario">
+    <div class="row">
+      <mat-form-field appearance="fill">
+        <mat-label>Nombre</mat-label>
+        <input
+          matInput
+          formControlName="nombre"
+          placeholder="Ingrese un nombre"
+        />
+        <mat-error *ngIf="formulario.get('nombre')?.invalid"
+          >El campo es requerido</mat-error
+        >
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="fill">
+        <mat-label>Comision</mat-label>
+        <input
+          matInput
+          formControlName="comision"
+          placeholder="Ingrese una comision"
+        />
+        <mat-error *ngIf="formulario.get('comision')?.invalid"
+          >El campo es requerido</mat-error
+        >
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="fill">
+        <mat-label>Profesor</mat-label>
+        <input
+          matInput
+          formControlName="profesor"
+          placeholder="Ingrese el profesor"
+        />
+        <mat-error *ngIf="formulario.get('profesor')?.invalid"
+          >El campo es requerido</mat-error
+        >
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="fill">
+        <mat-label>Inicio</mat-label>
+        <input
+          matInput
+          formControlName="fechaInicio"
+          [matDatepicker]="picker"
+        />
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="formulario.get('fechaInicio')?.invalid"
+          >El campo es requerido y con este formato MM/DD/YYYY</mat-error
+        >
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="fill">
+        <mat-label>Fin</mat-label>
+        <input matInput formControlName="fechaFin" [matDatepicker]="picker2" />
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="picker2"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker2></mat-datepicker>
+        <mat-error *ngIf="formulario.get('fechaFin')?.invalid"
+          >El campo es requerido y con este formato MM/DD/YYYY</mat-error
+        >
+      </mat-form-field>
+    </div>
+    <div class="row mt-3">
+      <mat-slide-toggle formControlName="inscripcionAbierta"
+        >Inscripción abierta</mat-slide-toggle
+      >
+    </div>
+  </form>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-raised-button mat-dialog-close color="primary">Cancelar</button>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="guardar()"
+    [disabled]="formulario.invalid"
+  >
+    Guardar
+  </button>
+</div>

@@ -1,0 +1,145 @@
+<nav class="navbar text-bg-dark text-white mt-2">
+  <div class="container-fluid">
+    <div class="col-12">
+      <span appHeader20>Lista de inscripciones</span>
+    </div>
+  </div>
+</nav>
+<div class="row">
+  <div class="col-6">
+    <form [formGroup]="formulario">
+      <mat-form-field class="col-6">
+        <mat-label>Filtrar curso</mat-label>
+        <input
+          type="text"
+          matInput
+          formControlName="filtroCurso"
+          (keyup)="filtrarCurso($event)"
+          #input
+        />
+      </mat-form-field>
+      <mat-form-field class="col-6">
+        <mat-label>Filtrar alumno</mat-label>
+        <input
+          type="text"
+          matInput
+          formControlName="filtroAlumno"
+          (keyup)="filtrarAlumno($event)"
+          #input2
+        />
+      </mat-form-field>
+    </form>
+  </div>
+  <div
+    *ngIf="sesion$ | async as sesion"
+    class="col-2 mt-2"
+    style="align-content: flex-start"
+  >
+    <div *ngIf="sesion.usuarioActivo?.esAdmin">
+      <div class="d-flex justify-content-center w-100 mb-3">
+        <button mat-raised-button (click)="openDialog()" color="primary">
+          Agregar inscripcion
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <mat-table
+      [dataSource]="dataSource"
+      matSort
+      class="mat-elevation-z8 listaInscripciones"
+    >
+      <ng-container matColumnDef="cursoId">
+        <mat-header-cell *matHeaderCellDef mat-sort-header
+          >Curso Id</mat-header-cell
+        >
+        <mat-cell *matCellDef="let inscripcion">
+          {{ inscripcion.cursoId }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="cursoNombre">
+        <mat-header-cell *matHeaderCellDef mat-sort-header
+          >Nombre Curso</mat-header-cell
+        >
+        <mat-cell *matCellDef="let inscripcion">
+          {{ inscripcion.cursoNombre | titlecase }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="alumnoId">
+        <mat-header-cell *matHeaderCellDef mat-sort-header
+          >Alumno Id</mat-header-cell
+        >
+        <mat-cell *matCellDef="let inscripcion">
+          {{ inscripcion.alumnoId }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="alumnoNombre">
+        <mat-header-cell *matHeaderCellDef mat-sort-header
+          >Nombre Alumno</mat-header-cell
+        >
+        <mat-cell *matCellDef="let inscripcion">
+          {{ inscripcion.alumnoNombre | titlecase }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="acciones">
+        <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+        <mat-cell *matCellDef="let inscripcion">
+          <div *ngIf="sesion$ | async as sesion">
+            <mat-icon
+              *ngIf="sesion.usuarioActivo?.esAdmin"
+              class="cursor-pointer"
+              color="primary"
+              matTooltip="Editar"
+              (click)="editar(inscripcion.id)"
+              >edit</mat-icon
+            >
+            <mat-icon
+              *ngIf="sesion.usuarioActivo?.esAdmin"
+              class="cursor-pointer"
+              color="primary"
+              matTooltip="Borrar"
+              (click)="borrar(inscripcion.id)"
+              >delete</mat-icon
+            >
+          </div>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="columnas"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: columnas"></mat-row>
+      <tr class="mat-row" *matNoDataRow>
+        <td *ngIf="input.value != ''" class="mat-cell" colspan="3">
+          No hay cursos que coincidan con "{{ input.value }}"&nbsp;
+        </td>
+        <td
+          *ngIf="input.value != '' && input2.value != ''"
+          class="mat-cell"
+          colspan="1"
+        >
+          y&nbsp;
+        </td>
+
+        <td
+          *ngIf="input.value == '' && input2.value != ''"
+          class="mat-cell"
+          colspan="1"
+        >
+          No hay&nbsp;
+        </td>
+        <td *ngIf="input2.value != ''" class="mat-cell" colspan="3">
+          alumnos que coincidan con "{{ input2.value }}"
+        </td>
+      </tr>
+    </mat-table>
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 25, 100]"
+      aria-label="Seleccione la página"
+    ></mat-paginator>
+  </div>
+</div>

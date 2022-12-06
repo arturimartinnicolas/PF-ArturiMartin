@@ -1,0 +1,115 @@
+<nav class="navbar text-bg-dark text-white mt-2">
+  <div class="container-fluid">
+    <div class="col-12">
+      <span appHeader20>Lista de alumnos</span>
+    </div>
+  </div>
+</nav>
+<div class="row">
+  <mat-form-field class="col-md-5">
+    <mat-label>Filtrar alumnos</mat-label>
+    <input
+      type="text"
+      matInput
+      (keyup)="filtrar($event)"
+      #input
+      id="filtroAlumno"
+    />
+  </mat-form-field>
+  <div *ngIf="sesion$ | async as sesion" class="col-md-5 mt-2">
+    <div *ngIf="sesion.usuarioActivo?.esAdmin">
+      <div class="d-flex justify-content-center w-100 mb-3">
+        <button mat-raised-button (click)="openDialog()" color="primary">
+          Agregar alumnos
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <mat-table
+      [dataSource]="dataSource"
+      matSort
+      class="mat-elevation-z8 listaAlumnos"
+    >
+      <ng-container matColumnDef="nombre">
+        <mat-header-cell *matHeaderCellDef mat-sort-header
+          >Nombre</mat-header-cell
+        >
+        <mat-cell *matCellDef="let alumno">
+          {{ alumno | apellidoNombre: 0 | titlecase }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="edad">
+        <mat-header-cell *matHeaderCellDef mat-sort-header
+          >Edad</mat-header-cell
+        >
+        <mat-cell *matCellDef="let alumno"> {{ alumno.edad }} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="genero">
+        <mat-header-cell *matHeaderCellDef mat-sort-header
+          >Genero</mat-header-cell
+        >
+        <mat-cell *matCellDef="let alumno">
+          {{ alumno.genero | femeninoMasculino }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="fechaDeIngreso">
+        <mat-header-cell *matHeaderCellDef mat-sort-header
+          >Ingreso</mat-header-cell
+        >
+        <mat-cell *matCellDef="let alumno">{{
+          alumno.fechaDeIngreso | date: "dd/MM/YYYY"
+        }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="acciones">
+        <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+        <mat-cell *matCellDef="let alumno">
+          <div *ngIf="sesion$ | async as sesion">
+            <mat-icon
+              *ngIf="sesion.usuarioActivo?.esAdmin"
+              class="cursor-pointer"
+              color="primary"
+              matTooltip="Editar"
+              (click)="editar(alumno.id)"
+              >edit</mat-icon
+            >
+            <mat-icon
+              *ngIf="sesion.usuarioActivo?.esAdmin"
+              class="cursor-pointer"
+              color="primary"
+              matTooltip="Borrar"
+              (click)="borrar(alumno.id)"
+              >delete</mat-icon
+            >
+            <mat-icon
+              class="cursor-pointer"
+              color="primary"
+              matTooltip="Ver detalle"
+              (click)="verDetalle(alumno.id)"
+              ><span class="material-symbols-outlined">
+                visibility
+              </span></mat-icon
+            >
+          </div>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="columnas"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: columnas"></mat-row>
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">
+          No hay datos que coincidan con "{{ input.value }}"
+        </td>
+      </tr>
+    </mat-table>
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 25, 100]"
+      aria-label="Seleccione la página"
+    ></mat-paginator>
+  </div>
+</div>

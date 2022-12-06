@@ -1,0 +1,53 @@
+<h1
+  mat-dialog-title
+  class="navbar text-bg-dark text-white mt-2 justify-content-center"
+>
+  <div *ngIf="data" class="abm-header" appHeader20>
+    Modificación de Inscripción
+  </div>
+  <div *ngIf="!data" class="abm-header" appHeader20>Alta de Inscripción</div>
+</h1>
+<div mat-dialog-content>
+  <form [formGroup]="formulario">
+    <div class="row">
+      <mat-form-field appearance="fill">
+        <mat-label>Curso</mat-label>
+        <mat-select formControlName="cursoId" placeholder="Curso">
+          <mat-option>None</mat-option>
+          <mat-option *ngFor="let curso of cursosInsc" [value]="curso.id">{{
+            curso.nombre
+          }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="formulario.get('cursoId')?.invalid"
+          >El campo es requerido</mat-error
+        >
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="fill">
+        <mat-label>Alumno</mat-label>
+        <mat-select formControlName="alumnoId" placeholder="Curso">
+          <mat-option>None</mat-option>
+          <mat-option *ngFor="let alumno of alumnosInsc" [value]="alumno.id">{{
+            alumno | apellidoNombre
+          }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="formulario.get('alumnoId')?.invalid"
+          >El campo es requerido</mat-error
+        >
+      </mat-form-field>
+    </div>
+  </form>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-raised-button mat-dialog-close color="primary">Cancelar</button>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="guardar()"
+    [disabled]="formulario.invalid"
+  >
+    Guardar
+  </button>
+</div>

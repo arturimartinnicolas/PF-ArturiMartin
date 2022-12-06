@@ -1,0 +1,12 @@
+.listaUsuarios {
+    width: 100%;
+}
+.mat-column-nombre {
+    text-align: left;
+}
+.mat-column-acciones {
+    width: 64px;
+}
+.cursor-pointer{
+    cursor: pointer;
+}

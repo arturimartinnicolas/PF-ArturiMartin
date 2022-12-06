@@ -1,0 +1,40 @@
+<div class="col-md-10 mt-3 mat-elevation-z8">
+  <form [formGroup]="formulario" (ngSubmit)="login()">
+    <div class="row justify-content-center">
+      <div class="d-flex justify-content-center col-md-4">
+        <mat-form-field appearance="fill" class="fill mt-3">
+          <mat-label>Usuario</mat-label>
+          <input matInput formControlName="usuario" />
+
+          <mat-error *ngIf="formulario.get('usuario')?.invalid"
+            >El campo es requerido</mat-error
+          >
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="d-flex justify-content-center col-md-4">
+        <mat-form-field appearance="fill" class="fill">
+          <mat-label>Clave</mat-label>
+          <input
+            matInput
+            formControlName="clave"
+            [type]="hide ? 'password' : 'text'"
+          />
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="d-flex col-md-4 justify-content-center mb-3">
+        <button
+          type="submit"
+          mat-raised-button
+          color="primary"
+          [disabled]="formulario.invalid"
+        >
+          Validar
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

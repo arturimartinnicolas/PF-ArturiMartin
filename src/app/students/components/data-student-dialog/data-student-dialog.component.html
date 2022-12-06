@@ -1,0 +1,67 @@
+<h1  mat-dialog-title  class="navbar text-bg-dark text-white mt-2 justify-content-center">
+  <div *ngIf="data" class="abm-header" appHeader20>Modificación de Alumno</div>
+  <div *ngIf="!data" class="abm-header" appHeader20>Alta de Alumno</div>
+</h1>
+<div mat-dialog-content>
+  <form [formGroup]="formulario">
+    <div class="row">
+      <mat-form-field appearance="fill">
+        <mat-label>Nombre</mat-label>
+        <input
+          matInput
+          formControlName="nombre"
+          placeholder="Ingrese un nombre"
+        />
+        <mat-error *ngIf="formulario.get('nombre')?.invalid"
+          >El campo es requerido</mat-error        >
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="fill">
+        <mat-label>Apellido</mat-label>
+        <input
+          matInput
+          formControlName="apellido"
+          placeholder="Ingrese un apellido"
+        />
+        <mat-error *ngIf="formulario.get('apellido')?.invalid"
+          >El campo es requerido</mat-error
+        >
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="fill">
+        <mat-label>Edad</mat-label>
+        <input matInput formControlName="edad" placeholder="Ingrese la edad" />
+        <mat-error *ngIf="formulario.get('edad')?.invalid"
+          >El campo es requerido y debe ser numérico</mat-error
+        >
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="fill">
+        <mat-label>Genero</mat-label>
+        <mat-select formControlName="genero" placeholder="Ingrese el genero">
+          <mat-option value="F">Femenino</mat-option>
+          <mat-option value="M">Masculino</mat-option>
+        </mat-select>
+        <mat-error *ngIf="formulario.get('genero')?.invalid"
+          >El campo es requerido</mat-error
+        >
+      </mat-form-field>
+    </div>
+  </form>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-raised-button mat-dialog-close color="primary">Cancelar</button>
+  <button
+    id="btnGuardar"
+    mat-raised-button
+    color="primary"
+    (click)="guardar()"
+    [disabled]="formulario.invalid"
+  >
+    Guardar
+  </button>
+</div>

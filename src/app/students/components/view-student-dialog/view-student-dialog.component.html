@@ -1,0 +1,123 @@
+<nav class="navbar text-bg-dark text-white mt-2">
+  <div class="container-fluid">
+    <div class="col-6">
+      <span appHeader20>Detalle del Alumno</span>
+    </div>
+  </div>
+</nav>
+<div class="row">
+  <div class="col-md-12">
+    <table class="table mat-elevation-z8">
+      <thead>
+        <th scope="col" class="col-3"></th>
+        <th scope="col" class="col-9"></th>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Nombre</td>
+          <td>
+            {{ alumno | apellidoNombre }}
+          </td>
+        </tr>
+        <tr>
+          <td>Edad</td>
+          <td>{{ alumno.edad }}</td>
+        </tr>
+        <tr>
+          <td>Género</td>
+          <td>
+            {{ alumno.genero | femeninoMasculino }}
+          </td>
+        </tr>
+        <tr>
+          <td>Fecha de ingreso</td>
+          <td>{{ alumno.fechaDeIngreso | date: "dd/MM/YYYY" }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<nav class="navbar text-bg-dark text-white mt-2">
+  <div class="container-fluid">
+    <div class="col-12">
+      <span appHeader20>Lista de inscripciones a cursos</span>
+    </div>
+  </div>
+</nav>
+<div class="row">
+  <mat-form-field class="col-md-5">
+    <mat-label>Filtrar curso</mat-label>
+    <input type="text" matInput (keyup)="filtrar($event)" id="filtroCurso" />
+  </mat-form-field>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <mat-table
+      [dataSource]="dataSource"
+      class="mat-elevation-z8 listcursos"
+      id="lista-cursos"
+    >
+      <ng-container matColumnDef="nombre">
+        <mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
+        <mat-cell *matCellDef="let cursoInscripcion">
+          {{ cursoInscripcion.nombre | titlecase }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="comision">
+        <mat-header-cell *matHeaderCellDef>Comision</mat-header-cell>
+        <mat-cell *matCellDef="let cursoInscripcion">
+          {{ cursoInscripcion.comision }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="profesor">
+        <mat-header-cell *matHeaderCellDef>Profesor</mat-header-cell>
+        <mat-cell *matCellDef="let cursoInscripcion">
+          {{ cursoInscripcion.profesor | titlecase }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="fechaInicio">
+        <mat-header-cell *matHeaderCellDef>Inicio</mat-header-cell>
+        <mat-cell *matCellDef="let cursoInscripcion">{{
+          cursoInscripcion.fechaInicio | date: "dd/MM/YYYY"
+        }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="fechaFin">
+        <mat-header-cell *matHeaderCellDef>Fin</mat-header-cell>
+        <mat-cell *matCellDef="let cursoInscripcion">{{
+          cursoInscripcion.fechaFin | date: "dd/MM/YYYY"
+        }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="inscripcionAbierta">
+        <mat-header-cell *matHeaderCellDef>Abierto</mat-header-cell>
+        <mat-cell *matCellDef="let cursoInscripcion">{{
+          cursoInscripcion.inscripcionAbierta
+        }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="acciones">
+        <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+        <mat-cell *matCellDef="let cursoInscripcion">
+          <mat-icon
+            class="cursor-pointer"
+            color="primary"
+            matTooltip="Borrar inscripcion"
+            (click)="borrar(cursoInscripcion.inscripcionId)"
+            >delete</mat-icon
+          >
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="columnas"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: columnas"></mat-row>
+    </mat-table>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div mat-dialog-actions align="end">
+      <button mat-raised-button mat-dialog-close color="primary">Cerrar</button>
+    </div>
+  </div>
+</div>
